@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+</head>
+<body>
+	<div class="imgcontainer">
+    <img src="logo.png" alt="codingninjas">
+  </div>
+<h1 class="head">
+	Username:
+<%= User.get(user_id).email %>
+   <br>
+	 WELCOME TO THE TODO APP
+ </h1>
+ <h2 class="imp_urg"> Urgent and Important </h2>
+ <h3 class="urg"> Urgent not Important </h3>
+ <h4 class="imp"> Important not urgent </h4>
+ <h5 class="nothing"> not Urgent not Important </h5>
+ <form action="/add" method="POST">
+
+ <input type="text" name="task" />
+
+ <br>
+ <p><input type="checkbox" name="Important"/> Important </p>
+ <p><input type="checkbox" name="Urgent"/> Urgent </p>
+ <input type="submit" value="Add Task" />
+
+
+ </form>
+
+<% tasks.each do |todo| %>
+
+
+<% if todo.done %>
+<li class="strikethrough">
+
+                <% if todo.Important==true && todo.Urgent==true %>
+					<h4 class="imp_urg_d"><%= todo.task %><h4>
+				<% elsif todo.Important==true && todo.Urgent==false %>
+					<h4 class="imp_d"><%= todo.task %><h4>
+				<% elsif todo.Important==false && todo.Urgent==true %>
+					<h4 class="urg_d"><%= todo.task %><h4>
+				<% elsif todo.Important==false && todo.Urgent==false %>
+					<h4 class="nothing_d"><%= todo.task %><h4>
+				<% end%>
+<% else %>
+<li>
+                <% if todo.Important==true && todo.Urgent==true %>
+					<h4 class="imp_urg"><%= todo.task %><h4>
+				<% elsif todo.Important==true && todo.Urgent==false %>
+					<h4 class="imp"><%= todo.task %><h4>
+				<% elsif todo.Important==false && todo.Urgent==true %>
+					<h4 class="urg"><%= todo.task %><h4>
+				<% elsif todo.Important==false && todo.Urgent==false %>
+					<h4 class="nothing"><%= todo.task %><h4>
+				<% end%>
+<% end %>
+
+
+<form action="/done" method="POST">
+
+<input type="hidden" name="id" value="<%= todo.id %>">
+<% if todo.done %>
+
+<input type="submit" value="UnDone">
+<% else %>
+<input type="submit" value="Done">
+<% end %>
+</form>
+<form action="/del" method="POST">
+<input type="hidden" name="id" value="<%=todo.id%>">
+<input type="submit" value="Delete">
+</form>
+</li>
+
+<% end %>
+
+</ul>
+<style type="text/css">
+.strikethrough {
+	text-decoration: line-through;
+}
+
+			.nothing{
+    			display:inline-block;
+    			background-color:green;
+    			color:#000066;
+					padding: 0
+			}
+			.nothing_d{
+    			display:inline;
+    			background-color:white;
+    			color:#000;
+					padding: 0
+			}
+			.imp{
+    			display:inline-block;
+    			background-color:yellow;
+    			color:#000066;
+					padding:0
+			}
+			.imp_d{
+    			display:inline;
+    			background-color:white;
+    			color:#000;
+					padding: 0
+			}
+			.urg{
+    			display:inline-block;
+    			background-color:orange;
+    			color:#000066;
+					padding: 0
+			}
+			.urg_d{
+    			display:inline;
+					background-color: rgba(0, 0, 255, 0.3);
+    			color:#000;
+					padding: 0
+			}
+			.imp_urg{
+    			display:inline-block;
+					background-color: rgba(0,255,0, 0.3);
+    			color:#000066;
+					padding: 0
+			}
+			.imp_urg_d{
+    			display:inline;
+    			background-color:white;
+    			color:#000;
+					padding:0
+			}
+			.head{
+				display: block;
+				background-color: rgba(0, 0, 255, 0.3);
+				font-size: 30px
+				font-family: "Times New Roman", Georgia, serif;
+				font-style: italic;
+			}
+</style>
+
+<a href="/signout"> Sign Out </a>
+
+</body>
+</html>
